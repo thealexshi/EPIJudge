@@ -9,8 +9,29 @@ def shortest_equivalent_path(path: str) -> str:
     1. Absolute paths (start with /)
     2. Relative paths
 
+    - Split tokens by /
+      - If you encounter a '.', continue 
+      - If you encounter an alphanumeric, push it onto the stack (If its a directory w a name, we are going
+      deeper/forward in our traversal)
+      - If you encounter .., we are going backwards in traversal:
+          - If the top of the stack is an alphanumeric, pop it and continue, cancelling out the forward traversal
+          with a backward traversal.
+          - Else, add the token to the stack.
+
+    How does split work:
+    '/' -> ['', '']
+    '/a/' -> ['', 'a', '']
+    'a/' -> ['a', '']
+
+    Time: O(N)
+    Space: O(N)
+
+    """
+    """
+    ./../
     """
     stack = []
+
     is_absolute = path[0] == '/'
     for token in path.split('/'):
         if token == '' or token == '.':
@@ -23,7 +44,11 @@ def shortest_equivalent_path(path: str) -> str:
         else:
             stack.append(token)
 
-    return '/' + '/'.join(stack) if is_absolute else '/'.join(stack)
+    result = '/'.join(stack)
+    if is_absolute:
+        result = '/' + result
+
+    return result
 
 
 if __name__ == '__main__':

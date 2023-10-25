@@ -12,23 +12,38 @@ def examine_buildings_with_sunset(sequence: Iterator[int]) -> List[int]:
 
     Option 1: For each building, scan all previous buildings to make sure heights are less than or equal to 
     current. Time: O(N^2). 
-    Option 2: Scan left to right, keep track of running max which you compare to each position. Time: O(N)
+    Option 2: Scan right to left, keep track of running max which you compare to each position. Time: O(N)
 
     1 3 2
     max = 3
 
+    """
+    """
+    My solution (more optimal)
+    """
+    # max_ = float('-inf')
+    # res = []
 
+    # for index in range(len(sequence)-1, -1, -1):
+    #     height = sequence[index]
+    #     if height > max_:
+    #         res.append(index)
+    #     max_ = max(max_, height)
+
+    # return res
 
     """
-    max_ = float('-inf')
+    Book's solution
+    """
     res = []
 
-    for index in range(len(sequence)-1, -1, -1):
-        height = sequence[index]
-        if height > max_:
-            res.append(index)
-        max_ = max(max_, height)
+    for index, height in enumerate(sequence):
+        # Do we need to pop elements off first?
+        while res and sequence[res[-1]] <= height:
+            res.pop()
+        res.append(index)
 
+    res.reverse()
     return res
 
 

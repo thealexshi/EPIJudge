@@ -9,18 +9,18 @@ def binary_tree_depth_order(tree: BinaryTreeNode) -> List[List[int]]:
     if tree == None:
         return []
 
-    q = deque([(tree, 1)])
+    current_depth_nodes = [tree]
 
     res = []
-    while q:
-        node, level = q.popleft()
-        if len(res) < level:
-            res.append([])
-        res[level - 1].append(node.data)
-        if node.left:
-            q.append((node.left, level + 1))
-        if node.right:
-            q.append((node.right, level + 1))
+    while current_depth_nodes:
+        res.append([c.data for c in current_depth_nodes])
+        next_level = []
+        for c in current_depth_nodes:
+            if c.left:
+                next_level.append(c.left)
+            if c.right:
+                next_level.append(c.right)
+        current_depth_nodes = next_level
 
     return res
 

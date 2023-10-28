@@ -1,23 +1,42 @@
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 
+"""
+Use an array to implement a queue
+
+enqueue and dequeue must be O(1)
+
+Most obvious solution: enqueue elements at back of array, dequeue elements at front of array. but each
+time you dequeue, you need to shift elements forward which is O(N)
+"""
+
 
 class Queue:
     def __init__(self, capacity: int) -> None:
-        # TODO - you fill in here.
-        return
+        self.arr = [0]*capacity
+        # index of the first element
+        self.head = 0
+        # index of the next place to put element
+        self.tail = 0
+        self.num_elements = 0
 
     def enqueue(self, x: int) -> None:
-        # TODO - you fill in here.
-        return
+        if self.num_elements == len(self.arr):
+            entries = self.arr[self.head:] + self.arr[:self.head]
+            self.arr = (entries) + [0]*(self.num_elements*2)
+            self.head, self.tail = 0, self.num_elements
+        self.arr[self.tail] = x
+        self.tail = (self.tail + 1) % len(self.arr)
+        self.num_elements += 1
 
     def dequeue(self) -> int:
-        # TODO - you fill in here.
-        return 0
+        val = self.arr[self.head]
+        self.head = (self.head + 1) % len(self.arr)
+        self.num_elements -= 1
+        return val
 
     def size(self) -> int:
-        # TODO - you fill in here.
-        return 0
+        return self.num_elements
 
 
 def queue_tester(ops):

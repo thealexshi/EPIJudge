@@ -1,15 +1,28 @@
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 
+"""
+Using 2 stacks:
+
+
+"""
+
 
 class Queue:
+    def __init__(self):
+        self.backwards = []
+        self.inorder = []
+
     def enqueue(self, x: int) -> None:
-        # TODO - you fill in here.
+        self.backwards.append(x)
         return
 
     def dequeue(self) -> int:
-        # TODO - you fill in here.
-        return 0
+        if self.inorder:
+            return self.inorder.pop()
+        while len(self.backwards) > 1:
+            self.inorder.append(self.backwards.pop())
+        return self.backwards.pop()
 
 
 def queue_tester(ops):

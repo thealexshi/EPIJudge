@@ -8,7 +8,16 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def even_odd(A: List[int]) -> None:
-    # TODO - you fill in here.
+    # Move even numbers before odd numbers.
+    next_odd, next_even = 0, len(A) - 1
+    while next_odd < next_even:
+        if A[next_odd] % 2 == 0:
+            next_odd += 1
+        elif A[next_even] % 2 != 0:
+            next_even -= 1
+        else:
+            A[next_odd], A[next_even] = A[next_even], A[next_odd]
+
     return
 
 

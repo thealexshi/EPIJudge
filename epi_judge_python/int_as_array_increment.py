@@ -4,23 +4,28 @@ from test_framework import generic_test
 
 
 def plus_one(A: List[int]) -> List[int]:
-    res = []
+    """
+    Example: [1, 0, 0]
 
-    carry = True
-    for i in reversed(range(len(A))):
-        digit = A[i]
-        if carry:
-            next_ = digit + 1
-        else:
-            next_ = digit
-        res.append(next_ % 10)
-        carry = next_ >= 10
+    - Add one to the last digit in the array
+    - Go through the array from back to front
+      - If current digit is 10, replace it with 0 and add one to the next digit. If next digit doesn't exist,
+      append 1. 
+      - Else, break.
+    """
+
+    A[-1] += 1
+    for i in reversed(range(1, len(A))):
+        if A[i] != 10:
+            break
+        A[i] = 0
+        A[i-1] += 1
     
-    if carry:
-        res.append(1)
+    if A[0] == 10:
+        A[0] = 1
+        A.append(0)
 
-    res.reverse()
-    return res
+    return A
 
 
 if __name__ == '__main__':
